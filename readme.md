@@ -5,14 +5,14 @@ Using this web service, students can learn the basics of web development.
 
 #Features
 ---------
--Groups and students management.
--Course, themes and tasks system.
--Homework system.
--Progress tracking.
+- Groups and students management.
+- Course, themes and tasks system.
+- Homework system.
+- Progress tracking.
 
 #Todo
 -----
--Test constructor
--Embeded text editor
+- Test constructor
+- Embeded text editor
 
 
