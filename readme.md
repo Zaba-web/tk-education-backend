@@ -13,6 +13,6 @@ Using this web service, students can learn the basics of web development.
 #Todo
 -----
 - Test constructor
-- Embeded text editor
+- Embedded text editor
 
 
