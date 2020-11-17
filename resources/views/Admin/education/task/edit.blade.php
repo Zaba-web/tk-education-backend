@@ -41,6 +41,7 @@
                     <option value="1" class="dark" @if($task->check_mode == 1) selected @endif>Не перевіряти (теоретичне завдання)</option>
                     <option value="2" class="dark" disabled>Перевіряти (вбудований редактор)</option>
                     <option value="3" class="dark" @if($task->check_mode == 3) selected @endif>Перевіряти (надсилання файлів)</option>
+                    <option value="4" class="dark" @if($task->check_mode == 4) selected @endif>Перевіряти (надсилання файлів), без теорії</option>
                 </select>
                 <br><br><br>
                 <select name="publication_setting" class="dark">

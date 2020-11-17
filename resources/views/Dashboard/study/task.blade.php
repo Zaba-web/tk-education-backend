@@ -15,21 +15,23 @@
 @section('content')
     <div class="content-wrapper">
         <h1 class="dark">Навчальні матеріали - {{$task->title}}</h1>
-        <div class="regular-block-full content">
-            <span class="dark h3-like">Теоретичні відомості</span>
-            <span class="dark">
-                <div class="tableOfContents">
-                    <ul class="table-of-contents">
-                    </ul>
-                </div>
-                {!!$task->theory!!}
-            </span>
-        </div>
+        @if($task->check_mode != 4)
+            <div class="regular-block-full content">
+                <span class="dark h3-like">Теоретичні відомості</span>
+                <span class="dark">
+                    <div class="tableOfContents">
+                        <ul class="table-of-contents">
+                        </ul>
+                    </div>
+                    {!!$task->theory!!}
+                </span>
+            </div>
+        @endif
         @if($task->check_mode > 1)
             <div class="regular-block-full content">
                 <span class="dark h3-like">Практика</span>
                 <p class="dark">
-                    @if($task->check_mode == 3)
+                    @if($task->check_mode >= 3)
                         Виконайте поставлене завдання та надішліть роботу, скориставшись кнопками нижче. Роботу слід надіслати у вигляді архіву, назва якого містить ваше прізвище.
                     @endif
                 </p>
