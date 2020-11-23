@@ -933,7 +933,8 @@ code, .user-con{
   overflow-x:auto;
 }
 code{
-  width:52%;
+  width:auto;
+  display: inline-block;
   border:0;
   line-height:10px;
   font-family:monospace;
