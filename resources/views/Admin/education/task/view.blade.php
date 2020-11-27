@@ -33,17 +33,13 @@
                 <ul class="table-of-contents">
                 </ul>
             </div>
-            <p>
-                {!!$task->theory!!}
-            </p>
+            {!!$task->theory!!}
         </div>
         <div class="regular-block-full">
             <span class="dark h3-like">Завдання</span>
             <p>Завдання до {{$task->title}}.</p>
             <br>
-            <p>
-                {!!$task->task!!}
-            </p>
+            {!!$task->task!!}
         </div>
     </div>
 </div>
