@@ -16,17 +16,18 @@ class Theme extends Record
 
     public function isThemeAvailable($groupId){
         $access = Accessability::where('theme_id', $this->id)->where('group_id', $groupId)->get()->first();
+        
         if(isset($access)){
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public function middleMark($user_id){
         $middleMark = 0;
         $count = 0;
-        $tasks = Task::where('theme_id',$this->id)->where('is_themactic', "on")->get();
+        $tasks = Task::select('id')->where('theme_id',$this->id)->where('is_themactic', "on")->get();
         foreach($tasks as $task){
             $result = TaskResults::where('user_id', $user_id)->where('task_id', $task->id)->get();
             foreach($result as $work){
@@ -39,6 +40,10 @@ class Theme extends Record
         }else{
             return 0;
         }
+    }
+
+    public function getTaskList(){
+        return Task::getTasksByThemeId($this->id);
     }
 
     public static function list($id){
