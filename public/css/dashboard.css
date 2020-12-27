@@ -190,6 +190,9 @@ select {
   font-family: RalewayLight;
   font-size: 14px;
 }
+select.white option{
+  color:#000;
+}
 @media (max-width: 1024px) {
   input[type='text'],
   input[type='password'],
