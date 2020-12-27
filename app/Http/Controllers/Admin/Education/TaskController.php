@@ -25,7 +25,7 @@ class TaskController extends Controller
     }
 
     public function list($id){
-        $task = Task::select("id","title", "theme_id", "check_mode", "is_themactic", "is_draft", "created_at", "updated_at")->where("theme_id", $id)->get();
+        $task = Task::getTasksByThemeId($id);
         return json_encode($task);
     }
 
