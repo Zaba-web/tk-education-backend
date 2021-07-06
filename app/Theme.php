@@ -28,6 +28,7 @@ class Theme extends Record
         $middleMark = 0;
         $count = 0;
         $tasks = Task::select('id')->where('theme_id',$this->id)->where('is_themactic', "on")->get();
+        
         foreach($tasks as $task){
             $result = TaskResults::where('user_id', $user_id)->where('task_id', $task->id)->get();
             foreach($result as $work){
@@ -35,6 +36,7 @@ class Theme extends Record
                 $middleMark += $work->mark;
             }
         }
+
         if($count != 0){
             return $middleMark/$count;
         }else{
