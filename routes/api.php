@@ -30,9 +30,20 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/user/access_level', "UserController@getUserAccessLevel");
     Route::get('/user/userdata', "UserController@getAllUserData");
     Route::get('/user/logout', "UserController@logout");
+
+    Route::middleware('admin')->group(function(){
+        Route::get('/user/data/list', "UserController@list");
+        Route::get('/user/data/count/{type}', "UserController@count");
+
+        Route::get('/groups/list', "Admin\GroupController@list");
+        Route::delete('/groups/delete/{id}', 'Admin\GroupController@delete');
+    });
+
 });
 
-Route::middleware('auth:api')->get('/user', function(Request $request){
-    return $request->user();
-});
+//Route::get('/user/data', "UserController@list")->middleware('admin');
+
+// Route::middleware('auth:api')->get('/user', function(Request $request){
+//     return $request->user();
+// });
 
