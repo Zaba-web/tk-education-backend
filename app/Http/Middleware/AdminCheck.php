@@ -16,10 +16,22 @@ class AdminCheck
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user() && Auth::user()->getAccessLevel() == 2){
-            return $next($request);
-        }
+        $response = [
+            'status' => 2,
+            'message' => 'Unauthorized',
+        ];
 
-        return route('access_error');
+        if($request->header('Token') == '123')
+        {
+
+            return response()->json($response, 413);
+        }
+        else
+        {
+            if($request->user()->access_level >= 2)
+                return $next($request);
+            else
+                return response()->json($response, 413);
+        }
     }
 }
