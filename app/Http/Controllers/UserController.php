@@ -24,4 +24,19 @@ class UserController extends Controller
     public function getAllUserData(Request $request){
         return json_encode($request->user());
     }
+
+    public function list(Request $request){
+        return json_encode(User::list());
+    }
+
+    public function count(Request $request, $type){
+        switch($type) {
+            case "all":
+                return User::userCount();
+            case "confirmed":
+                return User::specifiedUserCount("confirmed", 1);
+            case "unconfirmed":
+                return User::specifiedUserCount("confirmed", 0);
+        }
+    }
 }

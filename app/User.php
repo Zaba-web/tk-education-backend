@@ -52,4 +52,20 @@ class User extends Authenticatable
     public function isOnline(){
         return Cache::has('user-'.$this->id);
     }
+
+    public static function list(){
+        $users = User::all();
+        return $users;
+    }
+
+    public static function userCount(){
+        $usersCount = User::count();
+        return $usersCount;
+    }
+
+    public static function specifiedUserCount($field, $value){
+        $usersCount = User::where($field, $value)->count();
+        return $usersCount;
+    }
+    
 }
