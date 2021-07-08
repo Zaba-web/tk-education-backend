@@ -12,7 +12,7 @@ class UserController extends Controller
         return $request->user()->access_level;
     }
     
-    public function accessError(Request $request){
+    public function accessError(){
         return 0;
     }
 
@@ -21,15 +21,15 @@ class UserController extends Controller
         return json_encode(["success" => true]);
     }
 
-    public function getAllUserData(Request $request){
+    public function getAllUserData(){
         return json_encode($request->user());
     }
 
-    public function list(Request $request){
-        return json_encode(User::list());
+    public function list($count){
+        return json_encode(User::list($count));
     }
 
-    public function count(Request $request, $type){
+    public function count($type){
         switch($type) {
             case "all":
                 return User::userCount();
