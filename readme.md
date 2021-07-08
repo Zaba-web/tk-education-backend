@@ -10,9 +10,5 @@ Using this web service, students can learn the basics of web development.
 - Homework system.
 - Progress tracking.
 
-#Todo
------
-- Test constructor
-- Embedded text editor
 
 
