@@ -20,6 +20,7 @@ header('Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS');
 Route::get('/', function(Request $request){return json_encode(["status"=>true]);});
 
 Route::get('/groups', "Admin\GroupController@list");
+Route::get('/groups/single/{id}', "Admin\GroupController@singleGroupData");
 
 Route::post('/register', "RegisterController@registerUser");
 Route::post('/login', "LoginController@login");
@@ -30,13 +31,17 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/user/access_level', "UserController@getUserAccessLevel");
     Route::get('/user/userdata', "UserController@getAllUserData");
     Route::get('/user/logout', "UserController@logout");
-
-    Route::middleware('admin')->group(function(){
-        Route::get('/user/data/list', "UserController@list");
+    
+    // Admin rights required
+    Route::middleware('admin')->group(function(){ 
+        // Users
         Route::get('/user/data/count/{type}', "UserController@count");
+        Route::get('/user/data/list/{count?}', "UserController@list");
 
+        // Gropus
         Route::get('/groups/list', "Admin\GroupController@list");
         Route::delete('/groups/delete/{id}', 'Admin\GroupController@delete');
+        Route::put('/admin/groups/update/{id}', 'Admin\GroupController@update'); 
     });
 
 });
