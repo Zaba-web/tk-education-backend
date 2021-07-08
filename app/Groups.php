@@ -45,4 +45,8 @@ class Groups extends Record
 
         return json_encode($students);
     }
+
+    public static function singleGroupInformation($id){
+        return json_encode(Groups::where('id', $id)->first());
+    }
 }

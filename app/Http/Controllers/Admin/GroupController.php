@@ -13,6 +13,10 @@ class GroupController extends Controller
         return Groups::list();
     }
 
+    function singleGroupData($id){
+        return Groups::singleGroupInformation($id);
+    }
+
     function students($group_id, $type){
         return Groups::getStudents($group_id, $type);
     }
