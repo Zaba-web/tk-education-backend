@@ -17,8 +17,8 @@ class GroupController extends Controller
         return Groups::singleGroupInformation($id);
     }
 
-    function students($group_id, $type){
-        return Groups::getStudents($group_id, $type);
+    function getAllStudents($group_id){
+        return json_encode(Groups::getAllStudents($group_id));
     }
 
     public function create(Request $request){

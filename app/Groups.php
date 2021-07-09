@@ -30,20 +30,13 @@ class Groups extends Record
         return json_encode($groups);
     }
 
-    public static function getStudents($group_id, $type){
-        $students;
-        if($type == 'confirmed'){
-            $students = Groups::find($group_id)->users()->where('confirmed', 1)->where('access_level',1)->get();
+    public static function getAllStudents($group_id) {
+        $students = Groups::find($group_id)->users()->where('access_level',1)->get();
 
-            foreach($students as $student){
-                $student['online'] = $student->isOnline();
-            }
-
-        }else{
-            $students = Groups::find($group_id)->users()->where('confirmed', 0)->where('access_level',1)->get();
-        }
-
-        return json_encode($students);
+        foreach($students as $student)
+            $student['online'] = $student->isOnline();
+        
+        return $students;
     }
 
     public static function singleGroupInformation($id){
