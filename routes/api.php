@@ -40,6 +40,8 @@ Route::middleware('auth:api')->group(function(){
 
         // Gropus
         Route::get('/groups/list', "Admin\GroupController@list");
+        Route::get('/groups/{id}/students', "Admin\GroupController@getAllStudents");
+        Route::post('/admin/groups/create', 'Admin\GroupController@create');
         Route::delete('/groups/delete/{id}', 'Admin\GroupController@delete');
         Route::put('/admin/groups/update/{id}', 'Admin\GroupController@update'); 
     });
