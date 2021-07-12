@@ -25,18 +25,20 @@ Route::get('/groups/single/{id}', "Admin\GroupController@singleGroupData");
 Route::post('/register', "RegisterController@registerUser");
 Route::post('/login', "LoginController@login");
 
-Route::get('/access_error', "UserController@accessError")->name('access_error');
+Route::get('/access_error', "Admin\UserController@accessError")->name('access_error');
 
 Route::middleware('auth:api')->group(function(){
-    Route::get('/user/access_level', "UserController@getUserAccessLevel");
-    Route::get('/user/userdata', "UserController@getAllUserData");
-    Route::get('/user/logout', "UserController@logout");
+    Route::get('/user/access_level', "Admin\UserController@getUserAccessLevel");
+    Route::get('/user/userdata', "Admin\UserController@getAllUserData");
+    Route::get('/user/logout', "Admin\UserController@logout");
     
     // Admin rights required
     Route::middleware('admin')->group(function(){ 
         // Users
-        Route::get('/user/data/count/{type}', "UserController@count");
-        Route::get('/user/data/list/{count?}', "UserController@list");
+        Route::get('/user/data/count/{type}', "Admin\UserController@count");
+        Route::get('/user/data/list/{count?}', "Admin\UserController@list");
+        Route::delete('/user/delete/{id}', 'Admin\UserController@delete');
+        Route::put('/admin/users/confirm/{id}', 'Admin\UserController@confirm');
 
         // Gropus
         Route::get('/groups/list', "Admin\GroupController@list");
@@ -44,6 +46,7 @@ Route::middleware('auth:api')->group(function(){
         Route::post('/admin/groups/create', 'Admin\GroupController@create');
         Route::delete('/groups/delete/{id}', 'Admin\GroupController@delete');
         Route::put('/admin/groups/update/{id}', 'Admin\GroupController@update'); 
+        Route::put('/admin/groups/setup/{id}', 'Admin\GroupController@setup');
     });
 
 });
