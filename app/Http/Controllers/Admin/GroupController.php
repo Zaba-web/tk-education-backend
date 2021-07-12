@@ -42,7 +42,6 @@ class GroupController extends Controller
         $group = Groups::find($id);
         
         $group->day_vn = $request->input('day');
-        $group->order_vn = $request->input('order');
 
         return $group->saveChanges("Групу ".$request->input('group-name')." успішно оновлено.", "Не вдалося оновити групу ".$request->input('group-name').".");
     }
