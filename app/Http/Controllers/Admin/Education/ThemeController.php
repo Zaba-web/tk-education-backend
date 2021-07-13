@@ -12,7 +12,7 @@ class ThemeController extends Controller
 {
     function create(Request $request){
         $theme = new Theme();
-
+        
         $theme->title  = $request->input('name');
         $theme->course_id  = $request->input('course_id');
 
@@ -32,7 +32,7 @@ class ThemeController extends Controller
         $theme = Theme::find($id);
         $theme->title = $request->input('name');
 
-        return $task->saveChanges("Тему успішно оновлено.", "Не вдалося оновити тему.");
+        return $theme->saveChanges("Тему успішно оновлено.", "Не вдалося оновити тему.");
     }
 
 }
