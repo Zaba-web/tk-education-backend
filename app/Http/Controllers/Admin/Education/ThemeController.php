@@ -28,6 +28,10 @@ class ThemeController extends Controller
         return Theme::list($id);
     }
 
+    public function getSingleItem($id){
+        return Theme::single($id);
+    }
+
     public function update(Request $request, $id){
         $theme = Theme::find($id);
         $theme->title = $request->input('name');

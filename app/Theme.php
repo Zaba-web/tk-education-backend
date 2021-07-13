@@ -17,9 +17,9 @@ class Theme extends Record
     public function isThemeAvailable($groupId){
         $access = Accessability::where('theme_id', $this->id)->where('group_id', $groupId)->get()->first();
         
-        if(isset($access)){
+        if(isset($access))
             return true;
-        }
+        
 
         return false;
     }
@@ -48,12 +48,16 @@ class Theme extends Record
         return Task::getTasksByThemeId($this->id);
     }
 
+    public static function single($id){
+        return Theme::find($id)->first();
+    }
+
     public static function list($id){
         $themes = Course::find($id)->themes()->orderByDesc('id')->get();
 
-        foreach($themes as $theme){
+        foreach($themes as $theme)
             $theme["taskCount"] = $theme->tasks()->count();
-        }
+        
 
         return json_encode($themes);
     }
