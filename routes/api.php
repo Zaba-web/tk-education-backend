@@ -32,21 +32,36 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/user/userdata', "Admin\UserController@getAllUserData");
     Route::get('/user/logout', "Admin\UserController@logout");
     
+    // Courses
+    Route::get('/education/courses', "Admin\Education\CourseController@list");
+    Route::get('/education/course/{id}', 'Admin\Education\CourseController@getSingleItem');
+    Route::get('/education/course/{id}/themes', 'Admin\Education\ThemeController@list');
+
     // Admin rights required
     Route::middleware('admin')->group(function(){ 
         // Users
         Route::get('/user/data/count/{type}', "Admin\UserController@count");
         Route::get('/user/data/list/{count?}', "Admin\UserController@list");
         Route::delete('/user/delete/{id}', 'Admin\UserController@delete');
-        Route::put('/admin/users/confirm/{id}', 'Admin\UserController@confirm');
+        Route::put('/users/confirm/{id}', 'Admin\UserController@confirm');
 
         // Gropus
         Route::get('/groups/list', "Admin\GroupController@list");
         Route::get('/groups/{id}/students', "Admin\GroupController@getAllStudents");
-        Route::post('/admin/groups/create', 'Admin\GroupController@create');
+        Route::post('/groups/create', 'Admin\GroupController@create');
         Route::delete('/groups/delete/{id}', 'Admin\GroupController@delete');
-        Route::put('/admin/groups/update/{id}', 'Admin\GroupController@update'); 
-        Route::put('/admin/groups/setup/{id}', 'Admin\GroupController@setup');
+        Route::put('/groups/update/{id}', 'Admin\GroupController@update'); 
+        Route::put('/groups/setup/{id}', 'Admin\GroupController@setup');
+
+        //Courses
+        Route::post('/education/course/create', 'Admin\Education\CourseController@create');
+        Route::delete('/education/course/delete/{id}', 'Admin\Education\CourseController@delete');
+        Route::put('/education/course/update/{id}', 'Admin\Education\CourseController@update');
+
+        //Themes
+        Route::post('/education/theme/create', 'Admin\Education\ThemeController@create');
+        Route::delete('/education/theme/delete/{id}', 'Admin\Education\ThemeController@delete');
+        Route::put('/education/theme/update/{id}', 'Admin\Education\ThemeController@update');
     });
 
 });
