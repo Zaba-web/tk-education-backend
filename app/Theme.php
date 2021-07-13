@@ -49,7 +49,7 @@ class Theme extends Record
     }
 
     public static function list($id){
-        $themes = Course::find($id)->themes()->get();
+        $themes = Course::find($id)->themes()->orderByDesc('id')->get();
 
         foreach($themes as $theme){
             $theme["taskCount"] = $theme->tasks()->count();
