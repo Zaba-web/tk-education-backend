@@ -36,18 +36,23 @@ class Course extends Record
         $results = TaskResults::where('course_id', $this->id)->where("checked",1)->count();
         $taskCount = count($this->getTasks());
 
-        if($taskCount != 0 && $results != 0){
+        if($taskCount != 0 && $results != 0)
             return round($results / $taskCount * 100);
-        }
+        
 
         return 0;
     }
 
     public static function list(){
         $courses = Course::all();
-        foreach($courses as $course){
+
+        foreach($courses as $course)
             $course["themeCount"] = $course->themes()->count();
-        }
+        
         return json_encode($courses);
+    }
+
+    public static function single($id){
+        return Course::where('id', $id)->get();
     }
 }

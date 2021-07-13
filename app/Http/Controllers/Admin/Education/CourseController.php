@@ -20,7 +20,11 @@ class CourseController extends Controller
     public function list(){
         return Course::list();
     }
-    
+
+    public function getSingleItem($id){
+        return Course::single($id);
+    }
+
     public function delete($id){
         $course = Course::find($id);
         return $course->deleteRecord("Видалення розділу пройшло успішно.", "Не вдалося видалити розділ.");
