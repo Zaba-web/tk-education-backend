@@ -37,6 +37,9 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/education/course/{id}', 'Admin\Education\CourseController@getSingleItem');
     Route::get('/education/course/{id}/themes', 'Admin\Education\ThemeController@list');
 
+    // Themes
+    Route::get('/education/theme/{id}', 'Admin\Education\ThemeController@getSingleItem');
+
     // Admin rights required
     Route::middleware('admin')->group(function(){ 
         // Users
@@ -62,6 +65,11 @@ Route::middleware('auth:api')->group(function(){
         Route::post('/education/theme/create', 'Admin\Education\ThemeController@create');
         Route::delete('/education/theme/delete/{id}', 'Admin\Education\ThemeController@delete');
         Route::put('/education/theme/update/{id}', 'Admin\Education\ThemeController@update');
+
+        //Tasks
+        Route::get('/education/tasks/list/{id}', 'Admin\Education\TaskController@list');
+        Route::get('/education/task/{id}', 'Admin\Education\TaskController@getSingleTask');
+        Route::delete('/education/task/delete/{id}', 'Admin\Education\TaskController@delete');
     });
 
 });
