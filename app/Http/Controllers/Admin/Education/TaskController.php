@@ -34,6 +34,10 @@ class TaskController extends Controller
         return $task->deleteRecord("Завдання успішно видалено.", "Не вдалося видалити задвання.");
     }
 
+    public function getSingleTask($id){
+        return Task::find($id);
+    }
+
     public function update(Request $request, $id){
         $task = Task::find($id);
 
