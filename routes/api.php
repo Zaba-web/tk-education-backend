@@ -39,7 +39,7 @@ Route::middleware('auth:api')->group(function(){
 
     // Themes
     Route::get('/education/theme/{id}', 'Admin\Education\ThemeController@getSingleItem');
-
+    
     // Admin rights required
     Route::middleware('admin')->group(function(){ 
         // Users
@@ -70,6 +70,8 @@ Route::middleware('auth:api')->group(function(){
         Route::get('/education/tasks/list/{id}', 'Admin\Education\TaskController@list');
         Route::get('/education/task/{id}', 'Admin\Education\TaskController@getSingleTask');
         Route::delete('/education/task/delete/{id}', 'Admin\Education\TaskController@delete');
+        Route::post('/education/task/create', 'Admin\Education\TaskController@create');
+        Route::put('/education/task/update/{id}', 'Admin\Education\TaskController@update');
     });
 
 });
