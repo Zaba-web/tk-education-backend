@@ -41,9 +41,8 @@ class TaskController extends Controller
     public function update(Request $request, $id){
         $task = Task::find($id);
 
-        if($task == null){
+        if($task == null)
             return GetFormatedMessage("Помилка","Не вдалося знайти задвання.","error");
-        }
 
         $task->title = $request->input('title');
         $task->check_mode = $request->input('check_mode');
