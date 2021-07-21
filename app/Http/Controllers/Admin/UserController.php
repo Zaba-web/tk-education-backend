@@ -46,7 +46,7 @@ class UserController extends Controller
         return json_encode(["success" => true]);
     }
 
-    public function getAllUserData(){
+    public function getAllUserData(Request $request){
         return json_encode($request->user());
     }
 
