@@ -13,9 +13,9 @@ class UserTaskController extends Controller
 {
     public function complete(Request $request){
 
-        if($request->file('work') == null){
+        if($request->file('work') == null)
             return GetFormatedMessage("Помилка","Ви повинні обрати файл.","error");
-        }
+        
 
         $taskId = $request->input('_sessTok'); // task id
 
@@ -23,18 +23,18 @@ class UserTaskController extends Controller
         
         $isTaskResultExist = TaskResults::where('task_id', $taskId)->where('user_id', Auth::user()->id)->get()->first();
 
-        if($isTaskResultExist != null){
+        if($isTaskResultExist != null)
             return GetFormatedMessage("Помилка","Ви вже здавали це завдання.","error");
-        }
+        
 
         // getting file from a request
 
         $work_file = $request->file('work');
         $extension = $work_file->extension();
 
-        if($extension == "php" || $extension == "phtml"){
+        if($extension == "php" || $extension == "phtml")
             return GetFormatedMessage("Помилка","Не вірний формат файлу.","error"); 
-        }
+        
 
         // get all meta data 
 
@@ -44,17 +44,17 @@ class UserTaskController extends Controller
 
         $isThematic = 0;
 
-        if($task->is_themactic == "on"){
+        if($task->is_themactic == "on")
             $isThematic = 1;
-        }
+        
 
         // all students should have a personal folder to upload their works
 
         $path = 'public/uploads/'.Auth::user()->login;
 
-        if(!File::exists($path)){
+        if(!File::exists($path))
             File::makeDirectory($path, $mode = 0777, true, true);
-        }
+        
 
         File::makeDirectory($path."/".$task->id, $mode = 0777, true, true); // and every single work contained in own folder
 
