@@ -15,9 +15,9 @@ class AccessabilityController extends Controller
         ->where("theme_id", $request->input('theme_id'))
         ->count();
         
-        if($isAccessSet != 0){
+        if($isAccessSet != 0)
             return GetFormatedMessage("Попередження","Ця група вже має доступ до даної теми.","informative");
-        }
+        
 
         $access = new Accessability();
         $access->group_id = $request->input('group_id');
@@ -26,5 +26,9 @@ class AccessabilityController extends Controller
         $access->theme_title = $request->input('theme_title');
 
         return $access->publish("Ви успішно надали доступ до даної теми.", "Не вдалося надати доступ.");
+    }
+
+    public function getGroupAccess($id){
+        return Accessability::where('theme_id', $id)->get();
     }
 }
