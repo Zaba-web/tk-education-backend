@@ -50,7 +50,7 @@ class UserController extends Controller
         return json_encode($request->user());
     }
 
-    public function list($count){
+    public function list($count = -1){
         return json_encode(User::list($count));
     }
 

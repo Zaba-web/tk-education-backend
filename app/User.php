@@ -53,9 +53,9 @@ class User extends Authenticatable
         return Cache::has('user-'.$this->id);
     }
 
-    public static function list($count = null){
+    public static function list($count){
 
-        if($count == null)
+        if($count == -1)
             return User::all()->sortByDesc('id');
         else
             return User::all()->sortByDesc('id')->take($count);
