@@ -27,6 +27,8 @@ Route::post('/login', "LoginController@login");
 
 Route::get('/access_error', "Admin\UserController@accessError")->name('access_error');
 
+Route::post('upload/image', 'FileController@uploadImage');
+
 Route::middleware('auth:api')->group(function(){
     Route::get('/user/access_level', "Admin\UserController@getUserAccessLevel");
     Route::get('/user/userdata', "Admin\UserController@getAllUserData");
@@ -47,6 +49,7 @@ Route::middleware('auth:api')->group(function(){
         Route::get('/user/data/list/{count?}', "Admin\UserController@list");
         Route::delete('/user/delete/{id}', 'Admin\UserController@delete');
         Route::put('/users/confirm/{id}', 'Admin\UserController@confirm');
+        Route::put('/users/access/{id}', 'Admin\UserController@change');
 
         // Gropus
         Route::get('/groups/list', "Admin\GroupController@list");
@@ -62,9 +65,11 @@ Route::middleware('auth:api')->group(function(){
         Route::put('/education/course/update/{id}', 'Admin\Education\CourseController@update');
 
         //Themes
+        Route::get('/education/theme/access/{id}', 'Admin\AccessabilityController@getGroupAccess');
         Route::post('/education/theme/create', 'Admin\Education\ThemeController@create');
         Route::delete('/education/theme/delete/{id}', 'Admin\Education\ThemeController@delete');
         Route::put('/education/theme/update/{id}', 'Admin\Education\ThemeController@update');
+        Route::post('/education/theme/grant-access', 'Admin\AccessabilityController@create');
 
         //Tasks
         Route::get('/education/tasks/list/{id}', 'Admin\Education\TaskController@list');
@@ -72,6 +77,7 @@ Route::middleware('auth:api')->group(function(){
         Route::delete('/education/task/delete/{id}', 'Admin\Education\TaskController@delete');
         Route::post('/education/task/create', 'Admin\Education\TaskController@create');
         Route::put('/education/task/update/{id}', 'Admin\Education\TaskController@update');
+
     });
 
 });
