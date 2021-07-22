@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\TaskResults;
 use App\Task;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -74,6 +75,35 @@ class UserTaskController extends Controller
 
     }
 
+    public function activity(Request $request, $count = -1){
+
+        if($count == -1)
+            $works = TaskResults::where('user_id', $request->user()->id)->get();
+        else 
+            $works = TaskResults::where('user_id', $request->user()->id)->take($count)->get();
+        
+        $result = ["user" => $request->user()->name];
+
+        foreach($works as $work) {
+            $result["works"][$work->id]["task"] = Task::where('id', $work->task_id)->first()->title;
+            $result["works"][$work->id]["date"] = str_replace("000000Z", "", $work->created_at);
+            $result["works"][$work->id]["checked"] = $work->checked;
+            $result["works"][$work->id]["mark"] = $work->mark;
+        }
+
+        return response($result);
+    }
+
+    public function single($id) {
+        $result = TaskResults::join('tasks', 'task_results.task_id', '=', 'tasks.id')
+        ->join('users', 'task_results.user_id', '=', 'users.id')
+        ->select('task_results.*', 'tasks.title', 'tasks.is_themactic', 'tasks.task', 'users.name as userName')
+        ->where('task_results.id', $id)
+        ->first();
+
+        return response($result);
+    }
+
     public function check(Request $request, $id){
         $result = TaskResults::find($id);
 
@@ -87,5 +117,22 @@ class UserTaskController extends Controller
     public function reject($id){
         $record = TaskResults::find($id);
         return $record->deleteRecord("Роботу виделно.", "Не вдалося видалити роботу.");
+    }
+
+    public function getWorksToCheck($courseId, $groupId, $userId = null) {
+        $result = User::join('groups', 'users.group_id', '=', 'groups.id')
+        ->join('task_results', 'users.id', '=', 'task_results.user_id')
+        ->join('tasks', 'task_results.task_id', '=', 'tasks.id')
+        ->select('task_results.*', 
+                 'users.name as userName', 
+                 'groups.name as groupName',
+                 'tasks.title as taskName');
+
+        if($userId != null)
+            $result->where('task_results.user_id', $userId);
+        else
+            $result->where([['task_results.course_id', '=', $courseId], ['task_results.group_id', '=', $groupId]]);
+
+        return response($result->get());
     }
 }
