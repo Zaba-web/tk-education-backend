@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Education;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Course;
+use App\Accessability;
 
 class CourseController extends Controller
 {
@@ -37,5 +38,35 @@ class CourseController extends Controller
         $course->description = $request->input('description');
 
         return $course->saveChanges("Розділ оновлено.", "Не вдалося оновити розділ.");
+    }
+
+    public function getFullData($courseId, Request $request) {
+        $course = Course::find($courseId);
+        $themes = $course->themes()->get();
+
+        $groupId = $request->user()->group_id;
+        $theme_ids;
+
+        foreach($themes as $theme)
+            $theme_ids[] = $theme->id;
+
+        $themesAccess = Accessability::isGroupHasAccessToTheme($groupId, $theme_ids);
+
+        $result = [
+            "courseName" => $course->name,
+            "themes" => []
+        ]; 
+
+        foreach($themes as $theme){
+            if(isset($themesAccess[$theme->id])) {
+                $result["themes"][$theme->id]["tasks"] = $theme->tasks()->get(['id', 'title', 'is_draft', 'is_themactic']);
+                $result["themes"][$theme->id]["avgMark"] = $theme->middleMark($request->user()->id);
+            } else {
+                $result["themes"][$theme->id] = null;
+            }
+            $result["themes"][$theme->id]["title"] = $theme->title;
+        }
+
+        return response($result);
     }
 }
