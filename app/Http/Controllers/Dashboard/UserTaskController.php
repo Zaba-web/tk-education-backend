@@ -18,10 +18,10 @@ class UserTaskController extends Controller
         
 
         $taskId = $request->input('_sessTok'); // task id
-
+        $user = $request->user();
         // check for early compliting
         
-        $isTaskResultExist = TaskResults::where('task_id', $taskId)->where('user_id', Auth::user()->id)->get()->first();
+        $isTaskResultExist = TaskResults::where('task_id', $taskId)->where('user_id', $user->id)->get()->first();
 
         if($isTaskResultExist != null)
             return GetFormatedMessage("Помилка","Ви вже здавали це завдання.","error");
@@ -50,7 +50,7 @@ class UserTaskController extends Controller
 
         // all students should have a personal folder to upload their works
 
-        $path = 'public/uploads/'.Auth::user()->login;
+        $path = 'public/uploads/'.$user->login;
 
         if(!File::exists($path))
             File::makeDirectory($path, $mode = 0777, true, true);
@@ -63,12 +63,12 @@ class UserTaskController extends Controller
         // writing information about completed task in database
 
         $taskResult = new TaskResults();
-        $taskResult->user_id = Auth::user()->id;
+        $taskResult->user_id = $user->id;
         $taskResult->task_id = $taskId;
         $taskResult->course_id = $course->id;
         $taskResult->is_thematic = $isThematic;
         $taskResult->link = asset('storage/uploads/'.Auth::user()->login.'/'.$task->id.'/'.$work_file->getClientOriginalName());
-        $taskResult->group_id = Auth::user()->group()->get()->first()->id;
+        $taskResult->group_id = $user->group()->get()->first()->id;
 
         return $taskResult->publish("Вашу роботу надіслано на перевірку.","Не вдалося надіслати роботу.");
 
