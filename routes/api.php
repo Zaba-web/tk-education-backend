@@ -34,9 +34,10 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/user/access_level', "Admin\UserController@getUserAccessLevel");
     Route::get('/user/userdata', "Admin\UserController@getAllUserData");
     Route::get('/user/logout', "Admin\UserController@logout");
+    Route::get('/user/group', "Admin\UserController@getGroup");
     
     Route::get('/education/courses/fulldata/{courseId}', "Admin\Education\CourseController@getFullData");
-
+    
     // Courses
     Route::get('/education/courses', "Admin\Education\CourseController@list");
     Route::get('/education/course/{id}', 'Admin\Education\CourseController@getSingleItem');
@@ -45,7 +46,13 @@ Route::middleware('auth:api')->group(function(){
     // Themes
     Route::get('/education/theme/{id}', 'Admin\Education\ThemeController@getSingleItem');
     
+    // Tasks
+    Route::get('/education/tasks/list/{id}', 'Admin\Education\TaskController@list');
+    Route::get('/education/task/{id}', 'Admin\Education\TaskController@getSingleTask');
     Route::post('/study/task/complete', 'Dashboard\UserTaskController@complete');
+
+    // Works
+    Route::get('/study/activity/{count?}', 'Dashboard\UserTaskController@activity');
 
     // Admin rights required
     Route::middleware('admin')->group(function(){ 
@@ -77,12 +84,14 @@ Route::middleware('auth:api')->group(function(){
         Route::post('/education/theme/grant-access', 'Admin\AccessabilityController@create');
 
         //Tasks
-        Route::get('/education/tasks/list/{id}', 'Admin\Education\TaskController@list');
-        Route::get('/education/task/{id}', 'Admin\Education\TaskController@getSingleTask');
         Route::delete('/education/task/delete/{id}', 'Admin\Education\TaskController@delete');
         Route::post('/education/task/create', 'Admin\Education\TaskController@create');
         Route::put('/education/task/update/{id}', 'Admin\Education\TaskController@update');
 
+        //Check
+        Route::get('/works/get/{courseId}/{groupId}/{userId?}', 'Dashboard\UserTaskController@getWorksToCheck');
+        Route::get('/works/get/{id}', 'Dashboard\UserTaskController@single');
+        Route::put('/admin/check/complete/{id}', 'Dashboard\UserTaskController@check');
     });
 
 });
