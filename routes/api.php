@@ -30,10 +30,13 @@ Route::get('/access_error', "Admin\UserController@accessError")->name('access_er
 Route::post('upload/image', 'FileController@uploadImage');
 
 Route::middleware('auth:api')->group(function(){
+    // Users
     Route::get('/user/access_level', "Admin\UserController@getUserAccessLevel");
     Route::get('/user/userdata', "Admin\UserController@getAllUserData");
     Route::get('/user/logout', "Admin\UserController@logout");
     
+    Route::get('/education/courses/fulldata/{courseId}', "Admin\Education\CourseController@getFullData");
+
     // Courses
     Route::get('/education/courses', "Admin\Education\CourseController@list");
     Route::get('/education/course/{id}', 'Admin\Education\CourseController@getSingleItem');
@@ -42,6 +45,8 @@ Route::middleware('auth:api')->group(function(){
     // Themes
     Route::get('/education/theme/{id}', 'Admin\Education\ThemeController@getSingleItem');
     
+    Route::post('/study/task/complete', 'Dashboard\UserTaskController@complete');
+
     // Admin rights required
     Route::middleware('admin')->group(function(){ 
         // Users
