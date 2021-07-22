@@ -65,6 +65,10 @@ class UserController extends Controller
         }
     }
 
+    public function getGroup(Request $request) {
+        return response($request->user()->group);
+    }
+
     public function change($id){
        $user = User::find($id);
 
