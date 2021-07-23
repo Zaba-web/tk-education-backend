@@ -83,8 +83,8 @@ class UserController extends Controller
             return GetFormatedMessage("Помилка","Не вдалося змінити рівень доступу користувача.","error"); 
     }
 
-    public function changeEmail(Request $request, $id){
-        $user = User::find($id);
+    public function changeEmail(Request $request){
+        $user = $request->user();
 
         if($user == null)
             return GetFormatedMessage("Помилка","Користувача не знайдено.","error"); 
@@ -97,8 +97,8 @@ class UserController extends Controller
             return GetFormatedMessage("Помилка","Не вдалося змінити адресу пошти.","error"); 
     }
 
-    public function changePassword(Request $request, $id){
-        $user = User::find($id);
+    public function changePassword(Request $request){
+        $user = $request->user();
 
         if(!Hash::check($request->input('old_password'), $user->password))
             return GetFormatedMessage("Помилка","Старий пароль введено не вірно.","error"); 
@@ -109,7 +109,7 @@ class UserController extends Controller
             if($user->save())
                 return GetFormatedMessage("Готово","Ваш пароль змінено.","success"); 
 
-        }else{
+        } else {
             return GetFormatedMessage("Помилка","Введені паролі не співпадають.","error"); 
         }
     }
