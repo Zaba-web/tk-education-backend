@@ -12,7 +12,6 @@
         <div>
             <h1 class="white">Помилка 404</h1><br>
             <p class="white">Сторінку на знайдено</p><br><br>
-            <a href="{{url('/')}}" class="white p-like">На головну</a>
         </div>
     </section>
 </body>
