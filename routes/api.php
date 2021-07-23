@@ -40,6 +40,7 @@ Route::middleware('auth:api')->group(function(){
     
     // Courses
     Route::get('/education/courses', "Admin\Education\CourseController@list");
+    Route::get('/education/courses/progress', 'Admin\Education\CourseController@generalProgress');
     Route::get('/education/course/{id}', 'Admin\Education\CourseController@getSingleItem');
     Route::get('/education/course/{id}/themes', 'Admin\Education\ThemeController@list');
 
@@ -53,6 +54,10 @@ Route::middleware('auth:api')->group(function(){
 
     // Works
     Route::get('/study/activity/{count?}', 'Dashboard\UserTaskController@activity');
+
+    //Settings
+    Route::post('/settings/password', 'Admin\UserController@changePassword');
+    Route::post('/settings/email', 'Admin\UserController@changeEmail');
 
     // Admin rights required
     Route::middleware('admin')->group(function(){ 
@@ -92,6 +97,7 @@ Route::middleware('auth:api')->group(function(){
         Route::get('/works/get/{courseId}/{groupId}/{userId?}', 'Dashboard\UserTaskController@getWorksToCheck');
         Route::get('/works/get/{id}', 'Dashboard\UserTaskController@single');
         Route::put('/admin/check/complete/{id}', 'Dashboard\UserTaskController@check');
+        Route::delete('/admin/check/reject/{id}', 'Dashboard\UserTaskController@reject');
     });
 
 });
