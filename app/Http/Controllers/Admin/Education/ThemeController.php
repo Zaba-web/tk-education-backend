@@ -29,7 +29,7 @@ class ThemeController extends Controller
     }
 
     public function getSingleItem($id){
-        return Theme::single($id);
+        return Theme::where('id', $id)->first();
     }
 
     public function update(Request $request, $id){

@@ -48,10 +48,6 @@ class Theme extends Record
         return Task::getTasksByThemeId($this->id);
     }
 
-    public static function single($id){
-        return Theme::find($id)->first();
-    }
-
     public static function list($id){
         $themes = Course::find($id)->themes()->orderByDesc('id')->get();
 
