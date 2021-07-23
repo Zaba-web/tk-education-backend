@@ -26,6 +26,18 @@ class CourseController extends Controller
         return Course::single($id);
     }
 
+    public function generalProgress(){
+        $result = [];
+        $courses = Course::all();
+        
+        foreach($courses as $course) {
+            $result[$course->id]["name"] = $course->name;
+            $result[$course->id]["progress"] = $course->getProgress();
+        }
+
+        return response($result);
+    }
+
     public function delete($id){
         $course = Course::find($id);
         return $course->deleteRecord("Видалення розділу пройшло успішно.", "Не вдалося видалити розділ.");

@@ -33,7 +33,7 @@ class Course extends Record
     }
 
     function getProgress(){
-        $results = TaskResults::where('course_id', $this->id)->where("checked",1)->count();
+        $results = TaskResults::where('course_id', $this->id)->where("checked", 1)->count();
         $taskCount = count($this->getTasks());
 
         if($taskCount != 0 && $results != 0)
