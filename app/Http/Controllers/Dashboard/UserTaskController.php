@@ -89,6 +89,7 @@ class UserTaskController extends Controller
             $result["works"][$work->id]["date"] = str_replace("000000Z", "", $work->created_at);
             $result["works"][$work->id]["checked"] = $work->checked;
             $result["works"][$work->id]["mark"] = $work->mark;
+            $result["works"][$work->id]["comment"] = $work->comment;
         }
 
         return response($result);
