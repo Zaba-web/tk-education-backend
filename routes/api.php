@@ -29,7 +29,7 @@ Route::get('/access_error', "Admin\UserController@accessError")->name('access_er
 
 Route::post('upload/image', 'FileController@uploadImage');
 
-Route::middleware('auth:api')->group(function(){
+Route::middleware(['auth:api', 'isOnline'])->group(function(){
     // Users
     Route::get('/user/access_level', "Admin\UserController@getUserAccessLevel");
     Route::get('/user/userdata', "Admin\UserController@getAllUserData");
