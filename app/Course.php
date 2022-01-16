@@ -32,8 +32,8 @@ class Course extends Record
         return $checkableTaskList;
     }
 
-    function getProgress(){
-        $results = TaskResults::where('course_id', $this->id)->where("checked", 1)->count();
+    function getProgress($userID){
+        $results = TaskResults::where('course_id', $this->id)->where('user_id',$userID)->where("checked", 1)->count();
         $taskCount = count($this->getTasks());
 
         if($taskCount != 0 && $results != 0)

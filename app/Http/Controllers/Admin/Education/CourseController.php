@@ -26,13 +26,13 @@ class CourseController extends Controller
         return Course::single($id);
     }
 
-    public function generalProgress(){
+    public function generalProgress(Request $request){
         $result = [];
         $courses = Course::all();
         
         foreach($courses as $course) {
             $result[$course->id]["name"] = $course->name;
-            $result[$course->id]["progress"] = $course->getProgress();
+            $result[$course->id]["progress"] = $course->getProgress($request->user()->id);
         }
 
         return response($result);
